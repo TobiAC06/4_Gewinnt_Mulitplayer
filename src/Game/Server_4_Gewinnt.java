@@ -10,14 +10,15 @@ public class Server_4_Gewinnt {
 	private BufferedReader in;
 
 	public static void main(String[] args) {
-
+		Server_4_Gewinnt server = new Server_4_Gewinnt();
+		server.starteServer();
 	}
 
 	public void starteServer() {
 		try {
 			socket = new ServerSocket(52072);
 			client = socket.accept();
-			out = new PrintWriter(client.getOutputStream(),true);
+			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
