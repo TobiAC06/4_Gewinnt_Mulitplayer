@@ -1,9 +1,13 @@
 package Game;
 
+import java.io.IOException;
+import java.net.Socket;
+
 import javax.swing.*;
 
 public class Client_4_Gewinnt {
-
+	static private Socket client;
+	
 	public static void main(String args[]) {
 		connectToServer();
 	}
@@ -21,8 +25,12 @@ public class Client_4_Gewinnt {
 		int result = JOptionPane.showConfirmDialog(null, new Object[] {ipLabel, ipField, portLabel,portField}, 
 	               "Please Enter IP and Port of Server", JOptionPane.OK_CANCEL_OPTION);
 	      if (result == JOptionPane.OK_OPTION) {
-	         System.out.println("IP-Adresse: " + ipField.getText());
-	         System.out.println("Port: " + portField.getText());
+	         int port = Integer.parseInt(portField.getText());
+	         try {
+				client = new Socket(ipField.getText(),port);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 	      }
 	      
 	}
