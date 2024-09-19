@@ -11,7 +11,8 @@ import javax.swing.JLabel;
 
 public class BenutzerOberflaeche extends JFrame{
 	
-	// remove this
+	/*
+	 * Test
 	public static void main(String[] args) {
 		BenutzerOberflaeche  n = new BenutzerOberflaeche("xxxxxxx"
 													   + "xxxxxxx"
@@ -20,6 +21,7 @@ public class BenutzerOberflaeche extends JFrame{
 													   + "xxxxgrr"
 													   + "rxxgggr");
 	}
+	*/
 	
 	//contains a String which represents the board: x -> nothing, r -> Player 1, g-> Player 2
 	private String board;
