@@ -15,13 +15,16 @@ public class Client_4_Gewinnt {
 	static private Server_4_Gewinnt server;
 
 	public static void main(String args[]) throws Exception {
-		
+		createServer();
+		server.print();
+		Thread.sleep(1);
+		System.out.println(in.readLine());
 	}
 	// creats a server over on a port
 	public static void createServer() throws Exception {
 		int port = Integer.parseInt( new JOptionPane().showInputDialog("Port:"));
 		server = new Server_4_Gewinnt(port);
-		client = new Socket("127.0.0.1", port);
+		client = new Socket("127.0.0.1", server.socket.getLocalPort());
 		out = new PrintWriter(client.getOutputStream(), true);
 		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
 	}
@@ -45,7 +48,6 @@ public class Client_4_Gewinnt {
 			client = new Socket(ipField.getText(), port);
 			out = new PrintWriter(client.getOutputStream(), true);
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-			System.out.println(in.readLine());
 		}
 
 	}

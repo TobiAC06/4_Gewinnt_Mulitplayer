@@ -4,7 +4,7 @@ import java.net.*;
 import java.io.*;
 
 public class Server_4_Gewinnt {
-	private ServerSocket socket;
+	public ServerSocket socket;
 	private Socket hostClient;
 	private PrintWriter host_out;
 	private BufferedReader host_in;
@@ -20,20 +20,24 @@ public class Server_4_Gewinnt {
 								{ 'x', 'x', 'x', 'x', 'x', 'x' ,'x'} };
 
 	public Server_4_Gewinnt(int port) throws Exception {
+		starteServer(port);
 		hostClient = new Socket("127.0.0.1", port);
 		host_out = new PrintWriter(hostClient.getOutputStream(), true);
 		host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
-		starteServer(port);
 	}
 
 	public void starteServer(int port) throws Exception {
 		// initalising a server on the port 52072
 		socket = new ServerSocket(port);
-		client = socket.accept();
-		client_out = new PrintWriter(client.getOutputStream(), true);
-		client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-		sendeSpielfeld();
-		Spiel_4_Gewinnt();
+		//client = socket.accept();
+		//client_out = new PrintWriter(client.getOutputStream(), true);
+		//client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		//sendeSpielfeld();
+		//Spiel_4_Gewinnt();
+	}
+	
+	public void print() {
+		host_out.println("funktioniert");
 	}
 
 	private void Spiel_4_Gewinnt() throws Exception {
