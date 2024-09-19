@@ -11,6 +11,9 @@ import javax.swing.JLabel;
 
 public class BenutzerOberflaeche extends JFrame{
 	
+	private static int zuege = 0;
+	private final int roll;
+	
 	/*
 	 * Test
 	public static void main(String[] args) {
@@ -30,7 +33,8 @@ public class BenutzerOberflaeche extends JFrame{
 	
 	
 	//Constructor
-	public BenutzerOberflaeche (String s) {
+	public BenutzerOberflaeche (String s, int roll) {
+		this.roll = roll;
 		this.board = s;
 		createTheScreen();
 		this.setVisible(true);
@@ -39,6 +43,7 @@ public class BenutzerOberflaeche extends JFrame{
 	
 	//gets the new board and updates the lables 
 	public void updateGame(String s) {
+		zuege++;
 		this.board = s;
 		for (int i = 0; i < board.length(); i++) {
 			if (board.charAt(i) == 'g') {
@@ -51,7 +56,9 @@ public class BenutzerOberflaeche extends JFrame{
 	
 	private void actionB(int i) {
 		//do something
-		System.out.println(i);
+		if (zuege % 2 == roll) {
+			System.out.println(i);
+		}
 	}
 	
 	//do some UI Stuff
