@@ -19,18 +19,20 @@ public class Server_4_Gewinnt {
 								{ 'x', 'x', 'x', 'x', 'x', 'x' ,'x'}, 
 								{ 'x', 'x', 'x', 'x', 'x', 'x' ,'x'} };
 
-	public Server_4_Gewinnt(String ip, int port) throws Exception {
-		hostClient = new Socket(InetAddress.getByName(ip), port);
+	public Server_4_Gewinnt(int port) throws Exception {
+		hostClient = new Socket("127.0.0.1", port);
 		host_out = new PrintWriter(hostClient.getOutputStream(), true);
 		host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
+		starteServer(port);
 	}
 
-	public void starteServer() throws Exception {
+	public void starteServer(int port) throws Exception {
 		// initalising a server on the port 52072
-		socket = new ServerSocket(52072);
+		socket = new ServerSocket(port);
 		client = socket.accept();
 		client_out = new PrintWriter(client.getOutputStream(), true);
 		client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+		sendeSpielfeld();
 		Spiel_4_Gewinnt();
 	}
 

@@ -12,11 +12,20 @@ public class Client_4_Gewinnt {
 	static private Socket client;
 	static private PrintWriter out;
 	static private BufferedReader in;
+	static private Server_4_Gewinnt server;
 
 	public static void main(String args[]) throws Exception {
-		connectToServer();
+		
 	}
-
+	// creats a server over on a port
+	public static void createServer() throws Exception {
+		int port = Integer.parseInt( new JOptionPane().showInputDialog("Port:"));
+		server = new Server_4_Gewinnt(port);
+		client = new Socket("127.0.0.1", port);
+		out = new PrintWriter(client.getOutputStream(), true);
+		in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+	}
+	
 	// connects to a Server with a IP and Port given by the User
 	public static void connectToServer() throws Exception {
 
