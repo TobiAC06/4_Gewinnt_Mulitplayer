@@ -1,4 +1,4 @@
-package com.example.vier_gewinnt_multiplayer.network;
+package com.example.vier_gewinnt_multiplayer.ui;
 
 import com.example.vier_gewinnt_multiplayer.Main;
 

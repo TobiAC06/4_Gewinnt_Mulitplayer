@@ -1,9 +1,9 @@
 package com.example.vier_gewinnt_multiplayer;
 
-import com.example.vier_gewinnt_multiplayer.network.BenutzerOberflaeche;
+import com.example.vier_gewinnt_multiplayer.ui.PlayScreen;
 import com.example.vier_gewinnt_multiplayer.network.Client;
 import com.example.vier_gewinnt_multiplayer.network.Server;
-import com.example.vier_gewinnt_multiplayer.network.StartScreen;
+import com.example.vier_gewinnt_multiplayer.ui.StartScreen;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -23,22 +23,22 @@ public class Main {
         new Thread(server = new Server(serverPort)).start();
         String hostIp = InetAddress.getLocalHost().getHostAddress();
         client = new Client(hostIp, serverPort);
-        BenutzerOberflaeche n = new BenutzerOberflaeche(client.receiveBoard(), 0);
+        PlayScreen n = new PlayScreen(client.receiveBoard(), 0);
         new Thread(new GameUpdater(n)).start();
     }
 
     public static void joining() throws IOException {
         client = clientInitGUI();
         assert client != null;
-        BenutzerOberflaeche n = new BenutzerOberflaeche(client.receiveBoard(), 1);
+        PlayScreen n = new PlayScreen(client.receiveBoard(), 1);
         new Thread(new GameUpdater(n)).start();
     }
 
     private static class GameUpdater implements Runnable {
 
-        BenutzerOberflaeche ui;
+        PlayScreen ui;
 
-        public GameUpdater(BenutzerOberflaeche ui) {
+        public GameUpdater(PlayScreen ui) {
             this.ui = ui;
         }
 

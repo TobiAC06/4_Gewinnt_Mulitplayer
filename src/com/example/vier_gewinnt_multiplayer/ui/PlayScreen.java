@@ -1,4 +1,4 @@
-package com.example.vier_gewinnt_multiplayer.network;
+package com.example.vier_gewinnt_multiplayer.ui;
 
 import com.example.vier_gewinnt_multiplayer.Main;
 
@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class BenutzerOberflaeche extends JFrame {
+public class PlayScreen extends JFrame {
 
     private static int zuege = 0;
     private final int roll;
@@ -18,7 +18,7 @@ public class BenutzerOberflaeche extends JFrame {
 
 
     //Constructor
-    public BenutzerOberflaeche (String s, int roll) {
+    public PlayScreen(String s, int roll) {
         this.roll = roll;
         this.board = s;
         createTheScreen();
