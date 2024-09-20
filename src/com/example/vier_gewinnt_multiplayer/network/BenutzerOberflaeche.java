@@ -29,13 +29,8 @@ public class BenutzerOberflaeche extends JFrame {
     //gets the new board and updates the lables
     public void updateGame(String s) {
         if (s.length() != 42) {
-<<<<<<< Updated upstream
-            int result = JOptionPane.showConfirmDialog (null, s,"Game Over",JOptionPane.OK_CANCEL_OPTION);
-            if (result == JOptionPane.OK_OPTION) {
-=======
             int result = JOptionPane.showConfirmDialog(null, s, "Game Over", JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.OK_OPTION || result == JOptionPane.CANCEL_OPTION) {
->>>>>>> Stashed changes
                 System.exit(0);
             }
             return;
