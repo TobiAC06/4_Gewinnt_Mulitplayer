@@ -28,7 +28,7 @@ public class Client {
     }
 
     public String receiveMessage() {
-        String message = null;
+        String message;
         try {
             message = in.readLine();
         } catch (IOException e) {

@@ -35,7 +35,7 @@ public class Main {
         }
 
         // Get the host IP, so the hostClient can connect to the server seamlessly
-        String hostIp = null;
+        String hostIp;
         try {
             hostIp = InetAddress.getLocalHost().getHostAddress();
         } catch (UnknownHostException e) {
@@ -91,12 +91,13 @@ public class Main {
     // private inner class, to handle incoming messages from the server
     private static class GameUpdater implements Runnable {
 
-        PlayScreen ui;
+        final PlayScreen ui;
 
         public GameUpdater(PlayScreen ui) {
             this.ui = ui;
         }
 
+        @SuppressWarnings("InfiniteLoopStatement")
         @Override
         public void run() {
             while (true) {

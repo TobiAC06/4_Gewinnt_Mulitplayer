@@ -12,8 +12,8 @@ public class PlayScreen extends JFrame {
 
     // contains a String which represents the board: x -> nothing, r -> Player 1, g-> Player 2
     private String board;
-    JButton[] bt = new JButton[7];
-    JLabel[] lb = new JLabel[42];
+    private final JButton[] bt = new JButton[7];
+    private final JLabel[] lb = new JLabel[42];
 
 
     // Constructor

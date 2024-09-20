@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class StartScreen extends JFrame {
 
-    JLabel infoText;
+    private final JLabel infoText;
 
     public StartScreen() {
         this.setTitle("4 Gewinnt nicht");

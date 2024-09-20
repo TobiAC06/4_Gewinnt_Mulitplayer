@@ -11,7 +11,7 @@ import java.net.Socket;
 
 public class Server implements Runnable {
 
-    int port;
+    private final int port;
 
     public ServerSocket socket;
 
@@ -23,7 +23,7 @@ public class Server implements Runnable {
     private PrintWriter client_out;
     private BufferedReader client_in;
 
-    private char[][] board = { // board[spalte][zeile]
+    private final char[][] board = { // board[spalte][zeile]
             { 'x', 'x', 'x', 'x', 'x', 'x' ,'x'},
             { 'x', 'x', 'x', 'x', 'x', 'x' ,'x'},
             { 'x', 'x', 'x', 'x', 'x', 'x' ,'x'},
@@ -32,7 +32,7 @@ public class Server implements Runnable {
             { 'x', 'x', 'x', 'x', 'x', 'x' ,'x'}
     };
 
-    public Server(int port) throws Exception {
+    public Server(int port) {
         this.port = port;
     }
 
@@ -97,6 +97,7 @@ public class Server implements Runnable {
                     }
                 }
                 // clear the InputStream for the client, in case they sent move messages during the host's turn
+                //noinspection ResultOfMethodCallIgnored
                 client.getInputStream().skip(client.getInputStream().available());
             } else {
                 int pSpalte = Integer.parseInt(client_in.readLine());
@@ -113,6 +114,7 @@ public class Server implements Runnable {
                     }
                 }
                 // clear the InputStream for the host, in case they sent move messages during the client's turn
+                //noinspection ResultOfMethodCallIgnored
                 hostClient.getInputStream().skip(hostClient.getInputStream().available());
             }
         }
@@ -145,18 +147,19 @@ public class Server implements Runnable {
                 break;
             }
         }
-        String horizontal = "";
-        String vertikal = "";
-        String diagonalEins = "";
-        String diagonalZwei = "";
+        StringBuilder horizontal = new StringBuilder();
+        StringBuilder vertikal = new StringBuilder();
+        StringBuilder diagonalEins = new StringBuilder();
+        StringBuilder diagonalZwei = new StringBuilder();
         for (int i = -6; i <= 6; i++) {
-            if (zeile + i >= 0 && zeile + i <= 5) horizontal += board[zeile + i][spalte];
-            if (spalte + i >= 0 && spalte + i <= 6) vertikal += board[zeile][spalte + i];
-            if (spalte + i >= 0 && spalte + i <= 6 && zeile + i >= 0 && zeile + i <= 5) diagonalEins += board[zeile + i][spalte + i];
-            if (spalte - i >= 0 && spalte - i <= 6 && zeile + i >= 0 && zeile + i <= 5)diagonalZwei += board[zeile + i][spalte - i];
+            if (zeile + i >= 0 && zeile + i <= 5) horizontal.append(board[zeile + i][spalte]);
+            if (spalte + i >= 0 && spalte + i <= 6) vertikal.append(board[zeile][spalte + i]);
+            if (spalte + i >= 0 && spalte + i <= 6 && zeile + i >= 0 && zeile + i <= 5) diagonalEins.append(board[zeile + i][spalte + i]);
+            if (spalte - i >= 0 && spalte - i <= 6 && zeile + i >= 0 && zeile + i <= 5)
+                diagonalZwei.append(board[zeile + i][spalte - i]);
         }
-        return horizontal.contains(siegerString) || vertikal.contains(siegerString)
-                || diagonalEins.contains(siegerString) || diagonalZwei.contains(siegerString);
+        return horizontal.toString().contains(siegerString) || vertikal.toString().contains(siegerString)
+                || diagonalEins.toString().contains(siegerString) || diagonalZwei.toString().contains(siegerString);
     }
 
     private void sendeSpielfeld() {
