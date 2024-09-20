@@ -29,7 +29,7 @@ public class BenutzerOberflaeche extends JFrame {
     //gets the new board and updates the lables
     public void updateGame(String s) {
         if (s.length() != 42) {
-            int result = JOptionPane.showConfirmDialog(null, s, JOptionPane.OK_OPTION);
+            int result = JOptionPane.showConfirmDialog (null, s,"Game Over",JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.OK_OPTION) {
                 System.exit(0);
             }
