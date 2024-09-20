@@ -4,31 +4,30 @@ import com.example.vier_gewinnt_multiplayer.Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class PlayScreen extends JFrame {
 
     private static int zuege = 0;
     private final int roll;
 
-    //contains a String which represents the board: x -> nothing, r -> Player 1, g-> Player 2
+    // contains a String which represents the board: x -> nothing, r -> Player 1, g-> Player 2
     private String board;
     JButton[] bt = new JButton[7];
     JLabel[] lb = new JLabel[42];
 
 
-    //Constructor
+    // Constructor
     public PlayScreen(String s, int roll) {
         this.roll = roll;
         this.board = s;
-        createTheScreen();
+        createScreen();
         this.setVisible(true);
     }
 
 
-    //gets the new board and updates the lables
+    // gets the new board and updates the labels
     public void updateGame(String s) {
-        if (s.length() != 42) {
+        if (s.length() != 42) { // if the message isn't the board
             int result = JOptionPane.showConfirmDialog(null, s, "Game Over", JOptionPane.OK_CANCEL_OPTION);
             if (result == JOptionPane.OK_OPTION || result == JOptionPane.CANCEL_OPTION) {
                 System.exit(0);
@@ -46,16 +45,15 @@ public class PlayScreen extends JFrame {
         }
     }
 
-    private void actionB(int i) throws IOException, InterruptedException {
-        //do something
-        if (true || zuege % 2 == roll) {
-            System.out.println(i);
+    private void makeMove(int i) {
+        // Check if it's the current user's turn
+        if (zuege % 2 == roll) {
             Main.client.sendMove(i);
         }
     }
 
-    //do some UI Stuff
-    private void createTheScreen() {
+    // do some UI Stuff
+    private void createScreen() {
         this.setTitle("4 Gewinnt");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -67,13 +65,7 @@ public class PlayScreen extends JFrame {
         for (int i = 0; i < 7; i++) {
             JButton b = new JButton();
             int number = i;
-            b.addActionListener(e -> {
-                try {
-                    actionB(number);
-                } catch (IOException | InterruptedException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+            b.addActionListener(e -> makeMove(number));
             b.setBackground(new Color(0xFFFFFF));
             b.setText("↓");
             b.setFont(new Font("", Font.BOLD, 50));

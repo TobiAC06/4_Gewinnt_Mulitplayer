@@ -36,13 +36,7 @@ public class StartScreen extends JFrame {
         JButton nSp2 = new JButton();
         nSp2.setText("Starte neues offenes Spiel");
         nSp2.setFont(new Font("", Font.BOLD, 30));
-        nSp2.addActionListener(a -> {
-            try {
-                startG(true);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        nSp2.addActionListener(a -> startGame(true));
 
         JButton nSp3 = new JButton();
         nSp3.setText("Tritt  einem Spiel bei");
@@ -54,6 +48,7 @@ public class StartScreen extends JFrame {
                 throw new RuntimeException(e);
             }
         });
+        nSp3.addActionListener(a -> startGame(false));
 
         this.add(text);
         this.add(text3);
@@ -63,7 +58,7 @@ public class StartScreen extends JFrame {
         this.setVisible(true);
     }
 
-    private static void startG(boolean host) throws Exception {
+    private void startGame(boolean host) {
         if (host) {
             Main.hosting();
         } else {

@@ -1,4 +1,3 @@
-//XXX
 package com.example.vier_gewinnt_multiplayer.network;
 
 import java.io.BufferedReader;
@@ -7,7 +6,6 @@ import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Arrays;
 
 public class Server implements Runnable {
 
@@ -56,7 +54,7 @@ public class Server implements Runnable {
         host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
         System.out.println("hostClient connected!");
 
-        System.out.println("host IP address: " + InetAddress.getLocalHost().getHostAddress().toString());
+        System.out.println("host IP address and port: " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
 
         // accept client
         if (true) {
@@ -66,6 +64,11 @@ public class Server implements Runnable {
             client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             System.out.println("client connected!");
         }
+        System.out.print("Awaiting client connection...");
+        client = socket.accept();
+        client_out = new PrintWriter(client.getOutputStream(), true);
+        client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        System.out.println("client connected!");
 
         sendeSpielfeld();
         startGame();
@@ -75,6 +78,8 @@ public class Server implements Runnable {
         boolean hostWins = false;
         boolean clientWins = false;
         boolean hostsTurn = true;
+
+        // main game logic
         while (hostWins == clientWins) {
             if (hostsTurn) {
                 int pSpalte = Integer.parseInt(host_in.readLine());
@@ -83,15 +88,15 @@ public class Server implements Runnable {
                     for (int i = board.length-1; i >= 0; i--) {
                         if (board[i][pSpalte] == 'x') {
                             board[i][pSpalte] = 'r';
-                            hostWins = prüfeSieger('r', pSpalte);
+                            hostWins = pruefeSieger('r', pSpalte);
                             sendeSpielfeld();
                             hostsTurn = false;
                             break;
                         }
                     }
                 }
+                // clear the InputStream for the client, in case they sent move messages during the host's turn
                 client.getInputStream().skip(client.getInputStream().available());
-                client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             } else {
                 int pSpalte = Integer.parseInt(client_in.readLine());
                 System.out.println("client move");
@@ -99,18 +104,18 @@ public class Server implements Runnable {
                     for (int i = board.length-1; i >= 0; i--) {
                         if (board[i][pSpalte] == 'x') {
                             board[i][pSpalte] = 'g';
-                            clientWins = prüfeSieger('g', pSpalte);
+                            clientWins = pruefeSieger('g', pSpalte);
                             sendeSpielfeld();
                             hostsTurn = true;
                             break;
                         }
                     }
                 }
+                // clear the InputStream for the host, in case they sent move messages during the client's turn
                 hostClient.getInputStream().skip(hostClient.getInputStream().available());
-                host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
-
             }
         }
+
         gameOver(hostWins);
     }
 
@@ -130,7 +135,7 @@ public class Server implements Runnable {
         return false;
     }
 
-    private boolean prüfeSieger(char spieler, int spalte) {
+    private boolean pruefeSieger(char spieler, int spalte) {
         String siegerString = "" + spieler + spieler + spieler + spieler;
         int zeile = 0;
         for (int i = 0; i < board.length; i++) {
@@ -149,23 +154,18 @@ public class Server implements Runnable {
             if (spalte + i >= 0 && spalte + i <= 6 && zeile + i >= 0 && zeile + i <= 5) diagonalEins += board[zeile + i][spalte + i];
             if (spalte - i >= 0 && spalte - i <= 6 && zeile + i >= 0 && zeile + i <= 5)diagonalZwei += board[zeile + i][spalte - i];
         }
-        if (horizontal.indexOf(siegerString) >= 0 || vertikal.indexOf(siegerString) >= 0
-                || diagonalEins.indexOf(siegerString) >= 0 || diagonalZwei.indexOf(siegerString) >= 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return horizontal.contains(siegerString) || vertikal.contains(siegerString)
+                || diagonalEins.contains(siegerString) || diagonalZwei.contains(siegerString);
     }
 
     private void sendeSpielfeld() {
-        String sending = "";
+        StringBuilder sending = new StringBuilder();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                sending += board[i][j];
+                sending.append(board[i][j]);
             }
         }
         host_out.println(sending);
-        if (true) client_out.println(sending);
+        client_out.println(sending);
     }
-
 }

@@ -16,7 +16,7 @@ public class Client {
         connectToServer(ip, port);
     }
 
-    // connects to a Server with a IP and Port given by the User
+    // connects to a server with an IP and port given by the user
     public void connectToServer(String ip, int port) {
         try {
             client = new Socket(ip, port);
@@ -27,10 +27,15 @@ public class Client {
         }
     }
 
-    public String receiveBoard() throws IOException {
-        String spielFeld = in.readLine();
-        System.out.println(spielFeld);
-        return spielFeld;
+    public String receiveMessage() {
+        String message = null;
+        try {
+            message = in.readLine();
+        } catch (IOException e) {
+            System.err.println("Error receiving server message:");
+            throw new RuntimeException(e);
+        }
+        return message;
     }
 
     public void sendMove(int move) {
