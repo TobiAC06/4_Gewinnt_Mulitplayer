@@ -85,6 +85,8 @@ public class Server implements Runnable {
                         }
                     }
                 }
+                client.getInputStream().skip(client.getInputStream().available());
+                client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             } else {
                 int pSpalte = Integer.parseInt(client_in.readLine());
                 System.out.println("client move");
@@ -99,6 +101,8 @@ public class Server implements Runnable {
                         }
                     }
                 }
+                hostClient.getInputStream().skip(hostClient.getInputStream().available());
+                host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
 
             }
         }

@@ -43,7 +43,7 @@ public class BenutzerOberflaeche extends JFrame {
         //do something
         if (true || zuege % 2 == roll) {
             System.out.println(i);
-            Main.hostClient.sendMove(i);
+            Main.client.sendMove(i);
         }
     }
 

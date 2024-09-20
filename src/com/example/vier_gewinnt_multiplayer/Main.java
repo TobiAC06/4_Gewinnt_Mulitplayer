@@ -3,6 +3,7 @@ package com.example.vier_gewinnt_multiplayer;
 import com.example.vier_gewinnt_multiplayer.network.BenutzerOberflaeche;
 import com.example.vier_gewinnt_multiplayer.network.Client;
 import com.example.vier_gewinnt_multiplayer.network.Server;
+import com.example.vier_gewinnt_multiplayer.network.StartScreen;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -10,16 +11,24 @@ import java.io.IOException;
 public class Main {
 
     public static Server server;
-    public static Client hostClient;
+    public static Client client;
 
     public static void main(String[] args) throws Exception {
-        int serverPort = 5727;
+        StartScreen s = new StartScreen();
+    }
+
+    public static void hosting() throws Exception{
+        int serverPort = Integer.parseInt(JOptionPane.showInputDialog("Port:"));
         new Thread(server = new Server(serverPort)).start();
+        client = new Client("192.168.34.98", serverPort);
+        BenutzerOberflaeche n = new BenutzerOberflaeche(client.receiveBoard(), 0);
+        new Thread(new GameUpdater(n)).start();
+    }
 
-        hostClient = new Client("127.0.0.1", serverPort);
-
-        BenutzerOberflaeche n = new BenutzerOberflaeche(hostClient.receiveBoard(), 0);
-
+    public static void joining() throws IOException {
+        client = clientInitGUI();
+        assert client != null;
+        BenutzerOberflaeche n = new BenutzerOberflaeche(client.receiveBoard(), 1);
         new Thread(new GameUpdater(n)).start();
     }
 
@@ -34,8 +43,8 @@ public class Main {
         @Override
         public void run() {
             try {
-                while (true) {
-                    ui.updateGame(Main.hostClient.receiveBoard());
+                while(true) {
+                    ui.updateGame(Main.client.receiveBoard());
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
