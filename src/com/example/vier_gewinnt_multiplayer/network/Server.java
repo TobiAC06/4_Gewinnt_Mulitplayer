@@ -55,7 +55,7 @@ public class Server implements Runnable {
         host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
         System.out.println("hostClient connected!");
 
-        System.out.println("host IP address: " + Arrays.toString(InetAddress.getLocalHost().getAddress()));
+        System.out.println("host IP address: " + InetAddress.getLocalHost().getHostAddress().toString());
 
         // accept client
         if (true) {
