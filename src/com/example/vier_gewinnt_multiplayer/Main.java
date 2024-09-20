@@ -14,16 +14,7 @@ public class Main {
     public static Client hostClient;
 
     public static void main(String[] args) throws Exception {
-  
-    	
-    	int serverPort = 5727;
-        //new Thread(server = new Server(serverPort)).start();
-
-        hostClient = new Client("192.168.34.98", serverPort);
-
-        BenutzerOberflaeche n = new BenutzerOberflaeche(hostClient.receiveBoard(), 1);
-
-        new Thread(new GameUpdater(n)).start();
+    	StartScreen s = new StartScreen();
     }
     
     public static void hosting() throws Exception{

@@ -100,6 +100,7 @@ public class Server implements Runnable {
 
             }
         }
+        client_out.println((hostWins ? "Host": "Client")+" Wins");
     }
 
     private boolean spalteIstFrei(int spalte) {
