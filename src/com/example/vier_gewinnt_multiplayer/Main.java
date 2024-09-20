@@ -3,6 +3,7 @@ package com.example.vier_gewinnt_multiplayer;
 import com.example.vier_gewinnt_multiplayer.network.BenutzerOberflaeche;
 import com.example.vier_gewinnt_multiplayer.network.Client;
 import com.example.vier_gewinnt_multiplayer.network.Server;
+import com.example.vier_gewinnt_multiplayer.network.StartScreen;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -13,13 +14,29 @@ public class Main {
     public static Client hostClient;
 
     public static void main(String[] args) throws Exception {
-        int serverPort = 5727;
+  
+    	
+    	int serverPort = 5727;
+        //new Thread(server = new Server(serverPort)).start();
+
+        hostClient = new Client("192.168.34.98", serverPort);
+
+        BenutzerOberflaeche n = new BenutzerOberflaeche(hostClient.receiveBoard(), 1);
+
+        new Thread(new GameUpdater(n)).start();
+    }
+    
+    public static void hosting() throws Exception{
+    	int serverPort = Integer.parseInt(new JOptionPane().showInputDialog("Port:"));
         new Thread(server = new Server(serverPort)).start();
-
-        hostClient = new Client("127.0.0.1", serverPort);
-
-        BenutzerOberflaeche n = new BenutzerOberflaeche(hostClient.receiveBoard(), 0);
-
+        hostClient = new Client("192.168.34.98", serverPort);
+        BenutzerOberflaeche n = new BenutzerOberflaeche(hostClient.receiveBoard(), 1);
+        new Thread(new GameUpdater(n)).start();
+    }
+    
+    public static void joining() throws IOException {
+        hostClient = clientInitGUI();
+        BenutzerOberflaeche n = new BenutzerOberflaeche(hostClient.receiveBoard(), 1);
         new Thread(new GameUpdater(n)).start();
     }
 
@@ -34,7 +51,9 @@ public class Main {
         @Override
         public void run() {
             try {
-                ui.updateGame(Main.hostClient.receiveBoard());
+            	while(true) {
+                    ui.updateGame(Main.hostClient.receiveBoard());
+            	}
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

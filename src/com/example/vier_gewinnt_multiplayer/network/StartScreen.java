@@ -1,5 +1,6 @@
 package com.example.vier_gewinnt_multiplayer.network;
 
+import com.example.vier_gewinnt_multiplayer.Main;
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,12 +35,24 @@ public class StartScreen extends JFrame {
         JButton nSp2 = new JButton();
         nSp2.setText("Starte neues offenes Spiel");
         nSp2.setFont(new Font("", Font.BOLD, 30));
-        nSp2.addActionListener(a -> startG(true));
+        nSp2.addActionListener(a -> {
+			try {
+				startG(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 
         JButton nSp3 = new JButton();
         nSp3.setText("Tritt  einem Spiel bei");
         nSp3.setFont(new Font("", Font.BOLD, 30));
-        nSp2.addActionListener(a -> startG(false));
+        nSp2.addActionListener(a -> {
+			try {
+				startG(false);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 
         this.add(text);
         this.add(text3);
@@ -49,11 +62,11 @@ public class StartScreen extends JFrame {
         this.setVisible(true);
     }
 
-    private static void startG(boolean host) {
+    private static void startG(boolean host) throws Exception {
         if (host) {
-            System.out.println("leeeeeeess Goooooooooo");
+            Main.hosting();
         } else {
-
+        	Main.joining();
         }
     }
 

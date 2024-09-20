@@ -28,7 +28,7 @@ public class BenutzerOberflaeche extends JFrame {
 
     //gets the new board and updates the lables
     public void updateGame(String s) {
-        zuege++;
+        //zuege++;
         this.board = s;
         for (int i = 0; i < board.length(); i++) {
             if (board.charAt(i) == 'g') {
@@ -41,8 +41,8 @@ public class BenutzerOberflaeche extends JFrame {
 
     private void actionB(int i) throws IOException, InterruptedException {
         //do something
-        if (zuege % 2 == roll) {
-            System.out.println(i);
+        if (true || zuege % 2 == roll) {
+            //System.out.println(i);
             Main.hostClient.sendMove(i);
         }
     }

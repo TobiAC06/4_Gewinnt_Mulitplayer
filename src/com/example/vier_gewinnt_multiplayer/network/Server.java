@@ -115,7 +115,7 @@ public class Server implements Runnable {
         String siegerString = "" + spieler + spieler + spieler + spieler;
         int zeile = 0;
         for (int i = 0; i < board.length; i++) {
-            if (board[spalte][i] != 'x') {
+            if (board[i][spalte] != 'x') {
                 zeile = i;
                 break;
             }
@@ -124,11 +124,11 @@ public class Server implements Runnable {
         String vertikal = "";
         String diagonalEins = "";
         String diagonalZwei = "";
-        for (int i = -7; i <= 7; i++) {
-            if (zeile + i >= 0 && zeile + i <= 6) horizontal += board[spalte][zeile + i];
-            if (spalte + i >= 0 && spalte + i <= 5) vertikal += board[spalte + i][zeile];
-            if (spalte + i >= 0 && spalte + i <= 5 && zeile + i >= 0 && zeile + i <= 6) diagonalEins += board[spalte + i][zeile + i];
-            if (spalte - i >= 0 && spalte - i <= 5 && zeile + i >= 0 && zeile + i <= 6)diagonalZwei += board[spalte - i][zeile + i];
+        for (int i = -6; i <= 6; i++) {
+            if (zeile + i >= 0 && zeile + i <= 6) horizontal += board[zeile +i][spalte];
+            if (spalte + i >= 0 && spalte + i <= 5) vertikal += board[zeile ][spalte];
+            if (spalte + i >= 0 && spalte + i <= 5 && zeile + i >= 0 && zeile + i <= 6) diagonalEins += board[zeile + i][spalte + i];
+            if (spalte - i >= 0 && spalte - i <= 5 && zeile + i >= 0 && zeile + i <= 6)diagonalZwei += board[zeile + i][spalte - i];
         }
         if (horizontal.indexOf(siegerString) >= 0 || vertikal.indexOf(siegerString) >= 0
                 || diagonalEins.indexOf(siegerString) >= 0 || diagonalZwei.indexOf(siegerString) >= 0) {
