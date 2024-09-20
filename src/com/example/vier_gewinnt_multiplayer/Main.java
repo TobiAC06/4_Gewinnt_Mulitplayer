@@ -1,4 +1,3 @@
-//XXX
 package com.example.vier_gewinnt_multiplayer;
 
 import com.example.vier_gewinnt_multiplayer.network.BenutzerOberflaeche;

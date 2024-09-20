@@ -1,4 +1,3 @@
-//XXX
 package com.example.vier_gewinnt_multiplayer.network;
 
 import com.example.vier_gewinnt_multiplayer.Main;
@@ -8,7 +7,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class BenutzerOberflaeche extends JFrame {
-	
+
     private static int zuege = 0;
     private final int roll;
 
