@@ -7,6 +7,7 @@ import com.example.vier_gewinnt_multiplayer.network.StartScreen;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.InetAddress;
 
 public class Main {
 
@@ -20,7 +21,8 @@ public class Main {
     public static void hosting() throws Exception{
         int serverPort = Integer.parseInt(JOptionPane.showInputDialog("Port:"));
         new Thread(server = new Server(serverPort)).start();
-        client = new Client("192.168.34.98", serverPort);
+        String hostIp = InetAddress.getLocalHost().getHostAddress();
+        client = new Client(hostIp, serverPort);
         BenutzerOberflaeche n = new BenutzerOberflaeche(client.receiveBoard(), 0);
         new Thread(new GameUpdater(n)).start();
     }

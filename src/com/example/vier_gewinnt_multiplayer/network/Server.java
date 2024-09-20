@@ -3,8 +3,10 @@ package com.example.vier_gewinnt_multiplayer.network;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class Server implements Runnable {
 
@@ -52,6 +54,8 @@ public class Server implements Runnable {
         host_out = new PrintWriter(hostClient.getOutputStream(), true);
         host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
         System.out.println("hostClient connected!");
+
+        System.out.println("host IP address: " + Arrays.toString(InetAddress.getLocalHost().getAddress()));
 
         // accept client
         if (true) {
@@ -106,7 +110,14 @@ public class Server implements Runnable {
 
             }
         }
-        System.out.println("Game Over. The winner is: " + (hostWins ? "host" : "client") + "!");
+        gameOver(hostWins);
+    }
+
+    private void gameOver(boolean hostWins) {
+        String output = "Game Over. The winner is: " + (hostWins ? "host" : "client") + "!";
+        System.out.println(output);
+        client_out.println(output);
+        host_out.println(output);
     }
 
     private boolean spalteIstFrei(int spalte) {
