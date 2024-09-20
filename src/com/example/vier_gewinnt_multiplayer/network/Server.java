@@ -1,5 +1,7 @@
 package com.example.vier_gewinnt_multiplayer.network;
 
+import com.example.vier_gewinnt_multiplayer.Main;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -49,26 +51,23 @@ public class Server implements Runnable {
 
         // accept hostClient
         System.out.print("Awaiting hostClient connection...");
+        Main.startScreen.updateInfoString("Awaiting hostClient connection...");
         hostClient = socket.accept();
         host_out = new PrintWriter(hostClient.getOutputStream(), true);
         host_in = new BufferedReader(new InputStreamReader(hostClient.getInputStream()));
         System.out.println("hostClient connected!");
+        Main.startScreen.updateInfoString("hostClient connected!", false);
 
         System.out.println("host IP address and port: " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
 
         // accept client
-        if (true) {
-            System.out.print("Awaiting client connection...");
-            client = socket.accept();
-            client_out = new PrintWriter(client.getOutputStream(), true);
-            client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            System.out.println("client connected!");
-        }
         System.out.print("Awaiting client connection...");
+        Main.startScreen.updateInfoString("Connection details: " + InetAddress.getLocalHost().getHostAddress() + ":" + port + "\nAwaiting client connection...");
         client = socket.accept();
         client_out = new PrintWriter(client.getOutputStream(), true);
         client_in = new BufferedReader(new InputStreamReader(client.getInputStream()));
         System.out.println("client connected!");
+        Main.startScreen.updateInfoString("client connected!");
 
         sendeSpielfeld();
         startGame();
@@ -78,6 +77,8 @@ public class Server implements Runnable {
         boolean hostWins = false;
         boolean clientWins = false;
         boolean hostsTurn = true;
+
+        Main.startScreen.updateInfoString("Game in progress...");
 
         // main game logic
         while (hostWins == clientWins) {

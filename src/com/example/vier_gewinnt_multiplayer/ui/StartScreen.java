@@ -7,7 +7,9 @@ import java.awt.*;
 
 public class StartScreen extends JFrame {
 
-    public StartScreen () {
+    JLabel infoText;
+
+    public StartScreen() {
         this.setTitle("4 Gewinnt nicht");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
@@ -41,20 +43,21 @@ public class StartScreen extends JFrame {
         JButton nSp3 = new JButton();
         nSp3.setText("Tritt  einem Spiel bei");
         nSp3.setFont(new Font("", Font.BOLD, 30));
-        nSp3.addActionListener(a -> {
-            try {
-                startG(false);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
         nSp3.addActionListener(a -> startGame(false));
+
+        infoText = new JLabel();
+        // has to be initialized with empty space for width calculation
+        infoText.setText("                                      ");
+        infoText.setHorizontalAlignment(JLabel.CENTER);
+        infoText.setVerticalAlignment(JLabel.CENTER);
+        infoText.setFont(new Font("", Font.BOLD, 30));
 
         this.add(text);
         this.add(text3);
         this.add(nSp2);
         this.add(text4);
         this.add(nSp3);
+        this.add(infoText);
         this.setVisible(true);
     }
 
@@ -66,4 +69,12 @@ public class StartScreen extends JFrame {
         }
     }
 
+    public void updateInfoString(String message) {
+        updateInfoString(message, true);
+    }
+
+    public void updateInfoString(String message, boolean clearPrevious) {
+        infoText.setText(clearPrevious ? message : infoText.getText() + message);
+        infoText.revalidate();
+    }
 }
